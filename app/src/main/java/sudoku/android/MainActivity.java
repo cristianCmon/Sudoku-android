@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
 
     private int[][] rejilla;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rejilla = Sudoku.generar();
-                Sudoku.mostrarSudoku(rejilla);
+                Sudoku.mostrarSudokuConsola(rejilla);
 //                TODO OJEAR ESTE ENLACE https://www.youtube.com/watch?v=_fnRrruE2do
             }
         });

@@ -82,7 +82,7 @@ public class Sudoku {
         return true;
     }
 
-    public static void mostrarSudoku(int[][] sudoku) {
+    public static void mostrarSudokuConsola(int[][] sudoku) {
         for (int i = 0; i < sudoku.length; i++) {
 
             for (int j = 0; j < sudoku[i].length; j++) {
