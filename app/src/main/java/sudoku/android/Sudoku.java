@@ -13,7 +13,6 @@ public class Sudoku {
         return rejilla;
     }
 
-
     static boolean crearSudoku(int[][] rejilla, int fila, int columna) {
         Random random = new Random();
         int cifraGenerada = 0;

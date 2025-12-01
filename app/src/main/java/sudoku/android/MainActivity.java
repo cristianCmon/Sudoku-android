@@ -1,8 +1,10 @@
 package sudoku.android;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,9 +14,20 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity {
 
     private int[][] rejilla;
+    private List<Puntuaciones> puntuaciones = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +62,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("PUNTUACIONES");
+                puntuaciones.clear();
+                // TODO REVISAR ASINCRONÍA ATLAS
+                PeticionesBD.mostrarPuntuaciones(puntuaciones);
+
+                System.out.println(puntuaciones.size());
+
+                for (Puntuaciones p :
+                        puntuaciones) {
+                    System.out.println(p);
+                }
             }
         });
 
@@ -57,11 +80,18 @@ public class MainActivity extends AppCompatActivity {
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishAffinity();
-                System.exit(0);
+                boolean salir = false;
+                if (salir) {
+                    finishAffinity();
+                    System.exit(0);
+                } else {
+                    for (Puntuaciones p :
+                            puntuaciones) {
+                        System.out.println(p);
+                    }
+                }
             }
         });
     }
-
 
 }
