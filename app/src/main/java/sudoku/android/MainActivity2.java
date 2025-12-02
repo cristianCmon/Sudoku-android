@@ -18,8 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity2 extends AppCompatActivity {
 
+    PuntuacionesAdapter adaptador;
     RecyclerView recyclerView;
     List<Puntuaciones> puntuaciones = new ArrayList<>();
     Button btnVolverMenu;
@@ -39,23 +46,21 @@ public class MainActivity2 extends AppCompatActivity {
 
         activarComponentesActivity();
 
-        // TODO SINCRONIZAR RESPUESTA PETICION BD CON RECYCLERVIEW
-        PeticionesBD.mostrarPuntuaciones(puntuaciones);
-//        recyclerView.setAdapter(new PuntuacionesAdapter(getApplicationContext(), puntuaciones, MainActivity2.this));
+        PeticionesBD.mostrarPuntuaciones(puntuaciones, adaptador);
     }
 
     public void activarComponentesActivity() {
-        // RECYCLER VIEW
+        // ADAPTADOR Y RECYCLER VIEW
         recyclerView = findViewById(R.id.rvPuntuaciones);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adaptador = new PuntuacionesAdapter(getApplicationContext(), puntuaciones, MainActivity2.this);
+        recyclerView.setAdapter(adaptador);
 
         // BOTÓN SALIR
         btnVolverMenu = findViewById(R.id.btnVovlerMenu);
         btnVolverMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                System.out.println(puntuaciones);
-                System.out.println("VOLVER MENÚ");
                 Intent intent = new Intent(MainActivity2.this, MainActivity.class);
                 startActivity(intent);
             }

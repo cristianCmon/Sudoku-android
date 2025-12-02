@@ -26,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button btnNuevaPartida, btnPuntuaciones, btnSalir;
     private int[][] rejilla;
 
 
@@ -41,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        cargarComponentes();
+        activarComponentesActivity();
     }
 
 
-    public void cargarComponentes() {
+    public void activarComponentesActivity() {
         // BOTÓN NUEVA PARTIDA
-        Button btnNuevaPartida = findViewById(R.id.clicNuevaPartida);
+        btnNuevaPartida = findViewById(R.id.clicNuevaPartida);
         btnNuevaPartida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,27 +59,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // BOTÓN PUNTUACIONES
-        Button btnPuntuaciones = findViewById(R.id.clicPuntuaciones);
+        btnPuntuaciones = findViewById(R.id.clicPuntuaciones);
         btnPuntuaciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("PUNTUACIONES");
                 Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                 startActivity(intent);
-//                puntuaciones.clear();
-                // TODO REVISAR ASINCRONÍA ATLAS
-//                PeticionesBD.mostrarPuntuaciones(puntuaciones);
-
-//                System.out.println(puntuaciones.size());
             }
         });
 
         // BOTÓN SALIR APLICACIÓN
-        Button btnSalir = findViewById(R.id.clicSalir);
+        btnSalir = findViewById(R.id.clicSalir);
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("SALIR");
                 finishAffinity();
                 System.exit(0);
             }

@@ -30,13 +30,18 @@ public class PuntuacionesAdapter extends RecyclerView.Adapter<PuntuacionesViewHo
     @Override
     public void onBindViewHolder(@NonNull PuntuacionesViewHolder holder, int position) {
         Puntuaciones puntuacion = puntuaciones.get(position);
-        holder.nombre.setText(puntuaciones.get(position).getNombre());
-        holder.dificultad.setText(puntuaciones.get(position).getDificultad());
-        holder.puntuacion.setText(puntuaciones.get(position).getPuntuacion());
+        holder.nombre.setText(puntuacion.getNombre());
+        holder.dificultad.setText(puntuacion.getDificultad());
+        holder.puntuacion.setText(puntuacion.getPuntuacion());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return puntuaciones.size();
+    }
+
+    public void actualizarPuntuaciones(List<Puntuaciones> puntuacionesActualizadas) {
+        puntuaciones = puntuacionesActualizadas;
+        notifyDataSetChanged();
     }
 }
