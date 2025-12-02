@@ -1,5 +1,6 @@
 package sudoku.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private int[][] rejilla;
-    private List<Puntuaciones> puntuaciones = new ArrayList<>();
 
 
     @Override
@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("PUNTUACIONES");
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                startActivity(intent);
 //                puntuaciones.clear();
                 // TODO REVISAR ASINCRONÍA ATLAS
 //                PeticionesBD.mostrarPuntuaciones(puntuaciones);
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("SALIR");
+                finishAffinity();
+                System.exit(0);
             }
         });
     }
