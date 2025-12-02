@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         cargarComponentes();
     }
 
+
     public void cargarComponentes() {
         // BOTÓN NUEVA PARTIDA
         Button btnNuevaPartida = findViewById(R.id.clicNuevaPartida);
@@ -62,16 +63,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("PUNTUACIONES");
-                puntuaciones.clear();
+//                puntuaciones.clear();
                 // TODO REVISAR ASINCRONÍA ATLAS
-                PeticionesBD.mostrarPuntuaciones(puntuaciones);
+//                PeticionesBD.mostrarPuntuaciones(puntuaciones);
 
-                System.out.println(puntuaciones.size());
-
-                for (Puntuaciones p :
-                        puntuaciones) {
-                    System.out.println(p);
-                }
+//                System.out.println(puntuaciones.size());
             }
         });
 
@@ -80,16 +76,7 @@ public class MainActivity extends AppCompatActivity {
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean salir = false;
-                if (salir) {
-                    finishAffinity();
-                    System.exit(0);
-                } else {
-                    for (Puntuaciones p :
-                            puntuaciones) {
-                        System.out.println(p);
-                    }
-                }
+                System.out.println("SALIR");
             }
         });
     }

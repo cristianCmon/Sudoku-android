@@ -8,10 +8,10 @@ public class Puntuaciones {
     private String puntuacion;
 
 
-    public Puntuaciones(String puntuacion, String dificultad, String nombre) {
-        this.puntuacion = puntuacion;
-        this.dificultad = dificultad;
+    public Puntuaciones(String nombre, String dificultad, String puntuacion) {
         this.nombre = nombre;
+        this.dificultad = dificultad;
+        this.puntuacion = puntuacion;
     }
 
     public Puntuaciones(String _id, String nombre, String dificultad, String puntuacion) {

@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,10 +31,7 @@ public final class PeticionesBD {
         llamada.enqueue(new Callback<List<Puntuaciones>>() {
             @Override
             public void onResponse(Call<List<Puntuaciones>> call, Response<List<Puntuaciones>> response) {
-                Log.d("Mensaje", "Hay respuesta");
                 // TODO ATLAS NO SINCRONIZA BIEN Y LANZA NULL EXCEPTION AQUÍ
-
-
                 List<Puntuaciones> data = response.body();
 
                 // cargamos documentos obtenidos de la bd como elementos de la lista
@@ -49,11 +47,37 @@ public final class PeticionesBD {
 
             @Override
             public void onFailure(Call<List<Puntuaciones>> call, Throwable t) {
-//                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
-                Log.d("ERROR", t.toString());
+                Log.d("ERROR mostrarPuntuaciones", t.toString());
             }
         });
+    }
 
+    public static void guardarPuntuacion(Puntuaciones puntuacion) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:3000")
+                .addConverterFactory(GsonConverterFactory
+                        .create()).build();
+
+        ApiMongo api = retrofit.create(ApiMongo.class);
+
+        // Envío Comanda a base de datos
+        Call<Puntuaciones> llamada = api.crearPuntuacionSudoku(
+                puntuacion.getNombre(), puntuacion.getDificultad(), puntuacion.getPuntuacion()
+        );
+
+        llamada.enqueue(new Callback<Puntuaciones>() {
+            @Override
+            public void onResponse(Call<Puntuaciones> call, Response<Puntuaciones> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("Puntuación guardada con éxito");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Puntuaciones> call, Throwable t) {
+                Log.d("ERROR guardarPuntuacion", t.toString());
+            }
+        });
     }
 
 }
