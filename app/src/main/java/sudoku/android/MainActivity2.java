@@ -57,7 +57,7 @@ public class MainActivity2 extends AppCompatActivity {
         recyclerView.setAdapter(adaptador);
 
         // BOTÓN SALIR
-        btnVolverMenu = findViewById(R.id.btnVovlerMenu);
+        btnVolverMenu = findViewById(R.id.btnVolverMenu);
         btnVolverMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,4 +66,5 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
     }
+
 }

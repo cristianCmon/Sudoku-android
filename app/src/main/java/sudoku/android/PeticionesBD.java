@@ -65,11 +65,12 @@ public final class PeticionesBD {
         limpiarConexion();
     }
 
+
     private static void establecerConexion() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000")
-                .addConverterFactory(GsonConverterFactory
-                .create()).build();
+            .baseUrl("http://10.0.2.2:3000") // equivalente a 127.0.0.1:3000
+            .addConverterFactory(GsonConverterFactory
+            .create()).build();
 
         api = retrofit.create(ApiMongo.class);
     }
@@ -78,4 +79,5 @@ public final class PeticionesBD {
         retrofit = null;
         api = null;
     }
+
 }

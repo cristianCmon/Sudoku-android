@@ -44,4 +44,5 @@ public class PuntuacionesAdapter extends RecyclerView.Adapter<PuntuacionesViewHo
         puntuaciones = puntuacionesActualizadas;
         notifyDataSetChanged();
     }
+
 }
