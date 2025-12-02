@@ -1,5 +1,6 @@
 package sudoku.android;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -72,9 +74,29 @@ public class MainActivity extends AppCompatActivity {
         btnSalir = findViewById(R.id.clicSalir);
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finishAffinity();
-                System.exit(0);
+            public void onClick(View v) { // TODO POSIBLE REFACTORIZACIÓN
+                AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                alertaSalir.setTitle("¡Detente!");
+                alertaSalir.setMessage("\n¿Seguro que quieres abandonar?\n");
+                alertaSalir.setCancelable(false);
+
+                alertaSalir.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finishAffinity();
+                        System.exit(0);
+
+                        dialog.dismiss();
+                    }
+                });
+
+                alertaSalir.setNegativeButton("Volver", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertaSalir.show();
             }
         });
     }
