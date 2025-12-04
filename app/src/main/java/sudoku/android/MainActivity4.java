@@ -8,13 +8,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity3 extends AppCompatActivity {
+public class MainActivity4 extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.activity_main4);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -26,7 +27,6 @@ public class MainActivity3 extends AppCompatActivity {
     }
 
     public void activarComponentesActivity() {
-//        TODO VISTA PARA SOLICITAR NOMBRE USUARIO Y NIVEL DIFICULTAD
-        System.out.println("HOLA VISTA INTRODUCE NOMBRE Y SELECCIONA DIFICULTAD");
+        System.out.println("HOLA VISTA PARTIDA-SUDOKU");
     }
 }
