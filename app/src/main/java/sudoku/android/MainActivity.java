@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 rejilla = Sudoku.generar();
                 Sudoku.mostrarSudokuConsola(rejilla);
 //                TODO OJEAR ESTE ENLACE https://www.youtube.com/watch?v=_fnRrruE2do
+//                https://www.youtube.com/watch?v=lYjSl_ou05Q
+                Intent intent = new Intent(MainActivity.this, MainActivity4.class);
+                startActivity(intent);
             }
         });
 
