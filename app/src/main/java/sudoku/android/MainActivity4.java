@@ -14,14 +14,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity4 extends AppCompatActivity {
 
     private TableroSudoku tableroJuego;
     private ResolverSudoku resolverSudoku;
-    private int[][] rejilla;
-    private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnNuevo, btnRendirse, btnResolver;
+    private int[][] sudokuIncompletoJugador;
+    private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPista, btnRendirse, btnResolver;
     public static List<Button> botonera = new ArrayList<>();
 
 
@@ -55,7 +56,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(1);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -66,7 +67,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(2);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -77,7 +78,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(3);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -88,7 +89,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(4);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -99,7 +100,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(5);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -110,7 +111,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(6);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -121,7 +122,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(7);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -132,7 +133,7 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(8);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -143,16 +144,18 @@ public class MainActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(9);
                 tableroJuego.invalidate();
-                resolverSudoku.mostrarSudokuConsola();
+//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
         // Botón Pista
-        btnNuevo = findViewById(R.id.btnPista);
-        btnNuevo.setOnClickListener(new View.OnClickListener() {
+        btnPista = findViewById(R.id.btnPista);
+        btnPista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                System.out.println("PISTA");
+                resolverSudoku.mostrarSudokuConsola();
+                Sudoku.mostrarSudokuConsola(resolverSudoku.tableroCompleto);
             }
         });
 
@@ -191,7 +194,60 @@ public class MainActivity4 extends AppCompatActivity {
         btnResolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("RESUELTO?...");
+                if (Arrays.deepEquals(resolverSudoku.tablero, resolverSudoku.tableroCompleto)) {
+                    System.out.println("COMPLETADO CON EXITO");
+                    // TODO POSIBLE REFACTORIZACIÓN
+                    AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                    alertaSalir.setTitle("ENHORABUENA");
+                    alertaSalir.setMessage("\nLo has logrado, bien hecho\n");
+                    alertaSalir.setCancelable(false);
 
+                    alertaSalir.setPositiveButton("Guardar y Volver", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(MainActivity4.this, MainActivity.class);
+                            startActivity(intent);
+
+                            dialog.dismiss();
+                        }
+                    });
+
+//                    alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.cancel();
+//                        }
+//                    });
+
+                    alertaSalir.show();
+
+
+                } else {
+                    System.out.println("NO COINCIDE :(");
+                    // TODO POSIBLE REFACTORIZACIÓN
+                    AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                    alertaSalir.setTitle("Fallaste");
+                    alertaSalir.setMessage("\nSigue intentádolo, ¡ánimo!\n");
+                    alertaSalir.setCancelable(false);
+
+//                    alertaSalir.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            Intent intent = new Intent(MainActivity4.this, MainActivity.class);
+//                            startActivity(intent);
+//
+//                            dialog.dismiss();
+//                        }
+//                    });
+
+                    alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    alertaSalir.show();
+                }
             }
         });
 

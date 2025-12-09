@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ResolverSudoku {
 
-    int[][] tablero;
+    int[][] tablero, tableroCompleto;
     ArrayList<ArrayList<Object>> indiceCajaVacia;
 
     private int filaSeleccionada;
@@ -16,7 +16,7 @@ public class ResolverSudoku {
         columnaSeleccionada = -1;
 
         generarNuevo();
-        prueba();
+//        prueba();
 //        tablero = new int[9][9];
 
         // Crea tablero vacío (lleno de 0s)
@@ -100,7 +100,8 @@ public class ResolverSudoku {
     }
 
     public void generarNuevo() {
-        tablero = Sudoku.generar();
+        tableroCompleto = Sudoku.generar();
+        tablero = Sudoku.vaciarSudoku(tableroCompleto);
     }
 
     public void mostrarSudokuConsola() {

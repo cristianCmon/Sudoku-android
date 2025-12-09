@@ -1,5 +1,6 @@
 package sudoku.android;
 
+import java.util.HashSet;
 import java.util.Random;
 
 public class Sudoku {
@@ -13,7 +14,7 @@ public class Sudoku {
         return rejilla;
     }
 
-    static boolean crearSudoku(int[][] rejilla, int fila, int columna) {
+    public static boolean crearSudoku(int[][] rejilla, int fila, int columna) {
         Random random = new Random();
         int cifraGenerada = 0;
 
@@ -51,7 +52,7 @@ public class Sudoku {
         return false;
     }
 
-    static boolean esSeguro(int[][] rejilla, int fila, int columna, int cifraObjetivo) {
+    public static boolean esSeguro(int[][] rejilla, int fila, int columna, int cifraObjetivo) {
         // Comprueba si la cifra existe en la fila
         for (int x = 0; x < 9; x++) {
             if (rejilla[fila][x] == cifraObjetivo) {
@@ -79,6 +80,52 @@ public class Sudoku {
         }
 
         return true;
+    }
+
+    public static int[][] vaciarSudoku(int[][] originalCompleto) {
+        int[][] sudokuIncompletoJugador = new int[9][9];
+
+        // Rellenamos para evitar paso por referencia
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuIncompletoJugador[i][j] = originalCompleto[i][j];
+            }
+        }
+
+        int[] cifrasCero;
+
+        for (int i = 0; i < 9; i++) {
+            cifrasCero = posicionesCero();
+            sudokuIncompletoJugador[i][cifrasCero[0]] = 0;
+//            sudokuIncompletoJugador[i][cifrasCero[1]] = 0;
+//            sudokuIncompletoJugador[i][cifrasCero[2]] = 0;
+//            sudokuIncompletoJugador[i][cifrasCero[3]] = 0;
+//            sudokuIncompletoJugador[i][cifrasCero[4]] = 0;
+//            sudokuIncompletoJugador[i][cifrasCero[5]] = 0;
+//            sudokuIncompletoJugador[i][cifrasCero[6]] = 0;
+        }
+
+        return sudokuIncompletoJugador;
+    }
+
+    private static int[] posicionesCero() {
+        HashSet<Integer> comprobadorPosiciones = new HashSet<>();
+        Random random = new Random();
+        int contador = 0;
+        int posicionObjetivo;
+        int[] posicionesVacias = new int[1];
+
+        do {
+            posicionObjetivo = random.nextInt(0, 9);
+
+            if (!comprobadorPosiciones.contains(posicionObjetivo)) {
+                posicionesVacias[contador] = posicionObjetivo;
+                contador++;
+            }
+
+        } while (contador < 1);
+
+        return posicionesVacias;
     }
 
     public static void mostrarSudokuConsola(int[][] sudoku) {
