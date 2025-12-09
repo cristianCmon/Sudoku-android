@@ -4,18 +4,24 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class TableroSudoku extends View {
-    private final int colorTablero, colorRellenarCelda, colorResaltarCeldas;
+    private final int colorTablero, colorRellenarCelda, colorResaltarCeldas, colorLetra, colorLetraResuelta;
 
     private final Paint pintarColorTablero = new Paint();
     private final Paint pintarColorRellenarCelda = new Paint();
     private final Paint pintarColorResaltarCeldas = new Paint();
+    private final Paint pintarLetra = new Paint();
+
+    private final Rect pintarLetraBordes = new Rect();
 
     private int celdaSize;
 
@@ -31,6 +37,8 @@ public class TableroSudoku extends View {
             colorTablero = a.getInteger(R.styleable.TableroSudoku_colorTablero, 0);
             colorRellenarCelda = a.getInteger(R.styleable.TableroSudoku_colorRellenarCelda, 0);
             colorResaltarCeldas = a.getInteger(R.styleable.TableroSudoku_colorResaltarCeldas, 0);
+            colorLetra = a.getInteger(R.styleable.TableroSudoku_colorLetra, 0);
+            colorLetraResuelta = a.getInteger(R.styleable.TableroSudoku_colorLetraResuelta, 0);
         } finally {
             a.recycle();
         }
@@ -61,9 +69,14 @@ public class TableroSudoku extends View {
         pintarColorResaltarCeldas.setColor(colorResaltarCeldas);
         pintarColorResaltarCeldas.setAntiAlias(true);
 
+        pintarLetra.setStyle(Paint.Style.FILL);
+        pintarLetra.setColor(colorLetra);
+        pintarLetra.setAntiAlias(true);
+
         colorCelda(canvas, resolverSudoku.getFilaSeleccionada(), resolverSudoku.getColumnaSeleccionada());
         canvas.drawRect(0, 0, getWidth(), getHeight(), pintarColorTablero);
         drawBoard(canvas);
+        drawNumbers(canvas);
     }
 
     @Override
@@ -85,6 +98,42 @@ public class TableroSudoku extends View {
         }
 
         return esValido;
+    }
+
+    private void drawNumbers(Canvas canvas) {
+        pintarLetra.setTextSize(celdaSize);
+
+        for (int f = 0; f < 9; f++) {
+            for (int c = 0; c < 9; c++) {
+                if (resolverSudoku.getTablero()[f][c] != 0) {
+                    String texto = Integer.toString(resolverSudoku.getTablero()[f][c]);
+                    float ancho, alto;
+
+                    pintarLetra.getTextBounds(texto, 0, texto.length(), pintarLetraBordes);
+                    ancho = pintarLetra.measureText(texto);
+                    alto = pintarLetraBordes.height();
+
+                    canvas.drawText(texto, (c * celdaSize) + ((celdaSize - ancho) / 2), (f * celdaSize + celdaSize) - ((celdaSize - alto) / 2), pintarLetra);
+                }
+            }
+        }
+
+        pintarLetra.setColor(colorLetraResuelta);
+
+        for (ArrayList<Object> letra : resolverSudoku.getIndiceCajaVacia()) {
+            int f = (int) letra.get(0);
+            int c = (int) letra.get(1);
+
+            String texto = Integer.toString(resolverSudoku.getTablero()[f][c]);
+            float ancho, alto;
+
+            pintarLetra.getTextBounds(texto, 0, texto.length(), pintarLetraBordes);
+            ancho = pintarLetra.measureText(texto);
+            alto = pintarLetraBordes.height();
+
+            canvas.drawText(texto, (c * celdaSize) + ((celdaSize - ancho) / 2), (f * celdaSize + celdaSize) - ((celdaSize - alto) / 2), pintarLetra);
+
+        }
     }
 
     private void colorCelda(Canvas canvas, int f, int c) {
@@ -133,6 +182,10 @@ public class TableroSudoku extends View {
             canvas.drawLine(0, celdaSize * r, getWidth(), celdaSize * r, pintarColorTablero);
 
         }
+    }
+
+    public ResolverSudoku getResolverSudoku() {
+        return resolverSudoku;
     }
 
 }

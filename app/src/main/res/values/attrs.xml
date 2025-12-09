@@ -4,6 +4,7 @@
         <attr name="colorTablero" format="color"/>
         <attr name="colorRellenarCelda" format="color"/>
         <attr name="colorResaltarCeldas" format="color"/>
-
+        <attr name="colorLetra" format="color"/>
+        <attr name="colorLetraResuelta" format="color"/>
     </declare-styleable>
 </resources>

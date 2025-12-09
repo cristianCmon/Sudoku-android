@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity4 extends AppCompatActivity {
 
     private TableroSudoku tableroJuego;
+    private ResolverSudoku resolverSudoku;
     private int[][] rejilla;
     private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
@@ -35,6 +36,8 @@ public class MainActivity4 extends AppCompatActivity {
     public void activarComponentesActivity() {
         System.out.println("HOLA VISTA PARTIDA-SUDOKU");
         tableroJuego = findViewById(R.id.tableroSudoku);
+        resolverSudoku = tableroJuego.getResolverSudoku();
+
         rejilla = Sudoku.generar();
         Sudoku.mostrarSudokuConsola(rejilla);
 
@@ -44,7 +47,9 @@ public class MainActivity4 extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("1");
+                resolverSudoku.setPosicionNumero(1);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -53,7 +58,9 @@ public class MainActivity4 extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("2");
+                resolverSudoku.setPosicionNumero(2);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -62,7 +69,9 @@ public class MainActivity4 extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("3");
+                resolverSudoku.setPosicionNumero(3);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -71,7 +80,9 @@ public class MainActivity4 extends AppCompatActivity {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("4");
+                resolverSudoku.setPosicionNumero(4);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -80,7 +91,9 @@ public class MainActivity4 extends AppCompatActivity {
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("5");
+                resolverSudoku.setPosicionNumero(5);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -89,7 +102,9 @@ public class MainActivity4 extends AppCompatActivity {
         btn6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("6");
+                resolverSudoku.setPosicionNumero(6);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -98,7 +113,9 @@ public class MainActivity4 extends AppCompatActivity {
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("7");
+                resolverSudoku.setPosicionNumero(7);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -107,7 +124,9 @@ public class MainActivity4 extends AppCompatActivity {
         btn8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("8");
+                resolverSudoku.setPosicionNumero(8);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -116,8 +135,11 @@ public class MainActivity4 extends AppCompatActivity {
         btn9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("9");
+                resolverSudoku.setPosicionNumero(9);
+                tableroJuego.invalidate();
+                resolverSudoku.mostrarSudokuConsola();
             }
         });
     }
+
 }

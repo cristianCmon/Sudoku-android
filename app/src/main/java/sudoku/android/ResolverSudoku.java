@@ -1,30 +1,103 @@
 package sudoku.android;
 
+import java.util.ArrayList;
+
 public class ResolverSudoku {
 
-    private static int filaSeleccionada;
-    private static int columnaSeleccionada;
+    int[][] tablero;
+    ArrayList<ArrayList<Object>> indiceCajaVacia;
+
+    private int filaSeleccionada;
+    private int columnaSeleccionada;
 
 
     public ResolverSudoku() {
         filaSeleccionada = -1;
         columnaSeleccionada = -1;
+
+        tablero = new int[9][9];
+
+        // Crea tablero vacío (lleno de 0s)
+        for (int f = 0; f < 9; f++) {
+            for (int c = 0; c < 9; c++) {
+                tablero[f][c] = 0;
+            }
+        }
+        // Almacenará celdas vacías
+        indiceCajaVacia = new ArrayList<>();
     }
 
+    private void getIndicesCajaVacia() {
+        for (int f = 0; f < 9; f++) {
+            for (int c = 0; c < 9; c++) {
+                if (this.tablero[f][c] == 0) {
+                    this.indiceCajaVacia.add(new ArrayList<>());
+                    this.indiceCajaVacia.get(this.indiceCajaVacia.size() - 1).add(f);
+                    this.indiceCajaVacia.get(this.indiceCajaVacia.size() - 1).add(c);
+                }
+            }
+        }
+    }
+
+    public void setPosicionNumero(int numero) {
+        if ((this.filaSeleccionada != -1) && (this.columnaSeleccionada != -1)) {
+            // TODO Función de borrado temporal, borra número si se vuelve a pulsar
+            if (this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] == numero) {
+                this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] = 0;
+            } else {
+                this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] = numero;
+            }
+        }
+    }
+
+    public int[][] getTablero() {
+        return this.tablero;
+    }
+
+    public ArrayList<ArrayList<Object>> getIndiceCajaVacia() {
+        return this.indiceCajaVacia;
+    }
 
     public int getFilaSeleccionada() {
-        return filaSeleccionada;
+        return this.filaSeleccionada;
     }
 
     public void setFilaSeleccionada(int fila) {
-        ResolverSudoku.filaSeleccionada = fila;
+        this.filaSeleccionada = fila;
     }
 
     public int getColumnaSeleccionada() {
-        return columnaSeleccionada;
+        return this.columnaSeleccionada;
     }
 
     public void setColumnaSeleccionada(int columna) {
-        ResolverSudoku.columnaSeleccionada = columna;
+        this.columnaSeleccionada = columna;
+    }
+
+    public void mostrarSudokuConsola() {
+        for (int i = 0; i < tablero.length; i++) {
+
+            for (int j = 0; j < tablero[i].length; j++) {
+
+                if ((j + 1) % 3 == 0) {
+                    System.out.print(tablero[i][j] + "    ");
+                } else {
+                    System.out.print(tablero[i][j] + " ");
+                }
+            }
+
+            if ((i + 1) % 3 == 0) {
+                if ((i + 1) % 9 == 0) {
+                    System.out.println();
+                } else {
+                    System.out.println();
+                    System.out.println("-----------------------\n");
+                }
+            } else {
+                System.out.println();
+            }
+        }
+
+        System.out.println("***********************\n");
     }
 }
