@@ -2,6 +2,8 @@
 <resources>
     <declare-styleable name="TableroSudoku">
         <attr name="colorTablero" format="color"/>
-        <attr name="colorTableroSecundario" format="color"/>
+        <attr name="colorRellenarCelda" format="color"/>
+        <attr name="colorResaltarCeldas" format="color"/>
+
     </declare-styleable>
 </resources>

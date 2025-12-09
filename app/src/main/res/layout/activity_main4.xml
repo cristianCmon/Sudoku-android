@@ -10,6 +10,8 @@
     <sudoku.android.TableroSudoku
         android:id="@+id/tableroSudoku"
         custom:colorTablero="#000000"
+        custom:colorRellenarCelda="#6600DDFF"
+        custom:colorResaltarCeldas="#2600DDFF"
 
         custom:layout_constraintBottom_toBottomOf="parent"
         custom:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +20,6 @@
 
         android:layout_height="wrap_content"
         android:layout_width="wrap_content">
-
     </sudoku.android.TableroSudoku>
 
     <LinearLayout

@@ -5,14 +5,21 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
 public class TableroSudoku extends View {
-    private final int colorTablero;
+    private final int colorTablero, colorRellenarCelda, colorResaltarCeldas;
+
     private final Paint pintarColorTablero = new Paint();
+    private final Paint pintarColorRellenarCelda = new Paint();
+    private final Paint pintarColorResaltarCeldas = new Paint();
+
     private int celdaSize;
+
+    private final ResolverSudoku resolverSudoku = new ResolverSudoku();
 
 
     public TableroSudoku(Context context, @Nullable AttributeSet attrs) {
@@ -22,6 +29,8 @@ public class TableroSudoku extends View {
 
         try {
             colorTablero = a.getInteger(R.styleable.TableroSudoku_colorTablero, 0);
+            colorRellenarCelda = a.getInteger(R.styleable.TableroSudoku_colorRellenarCelda, 0);
+            colorResaltarCeldas = a.getInteger(R.styleable.TableroSudoku_colorResaltarCeldas, 0);
         } finally {
             a.recycle();
         }
@@ -44,8 +53,51 @@ public class TableroSudoku extends View {
         pintarColorTablero.setColor(colorTablero);
         pintarColorTablero.setAntiAlias(true);
 
+        pintarColorRellenarCelda.setStyle(Paint.Style.FILL);
+        pintarColorRellenarCelda.setColor(colorRellenarCelda);
+        pintarColorRellenarCelda.setAntiAlias(true);
+
+        pintarColorResaltarCeldas.setStyle(Paint.Style.FILL);
+        pintarColorResaltarCeldas.setColor(colorResaltarCeldas);
+        pintarColorResaltarCeldas.setAntiAlias(true);
+
+        colorCelda(canvas, resolverSudoku.getFilaSeleccionada(), resolverSudoku.getColumnaSeleccionada());
         canvas.drawRect(0, 0, getWidth(), getHeight(), pintarColorTablero);
         drawBoard(canvas);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean esValido;
+
+        float x = event.getX();
+        float y = event.getY();
+
+        int accion = event.getAction();
+
+        if (accion == MotionEvent.ACTION_DOWN) {
+            resolverSudoku.setFilaSeleccionada((int) Math.ceil(y / celdaSize));
+            resolverSudoku.setColumnaSeleccionada((int) Math.ceil(x / celdaSize));
+            esValido = true;
+
+        } else {
+            esValido = false;
+        }
+
+        return esValido;
+    }
+
+    private void colorCelda(Canvas canvas, int f, int c) {
+        if ((resolverSudoku.getColumnaSeleccionada() != -1) && (resolverSudoku.getFilaSeleccionada() != -1)) {
+            // Resalta fila de celda pulsada
+            canvas.drawRect(0, (f - 1) * celdaSize, celdaSize * 9, f * celdaSize, pintarColorResaltarCeldas);
+            // Resalta columna de celda pulsada
+            canvas.drawRect((c - 1) * celdaSize, 0, c * celdaSize, celdaSize * 9, pintarColorResaltarCeldas);
+            // Resalta celda pulsada
+            canvas.drawRect((c - 1) * celdaSize, (f - 1) * celdaSize, c * celdaSize, f * celdaSize, pintarColorRellenarCelda);
+        }
+
+        invalidate(); // refresca tablero
     }
 
     private void drawThickLine() {
