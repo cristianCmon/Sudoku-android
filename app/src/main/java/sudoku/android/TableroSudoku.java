@@ -77,6 +77,8 @@ public class TableroSudoku extends View {
         canvas.drawRect(0, 0, getWidth(), getHeight(), pintarColorTablero);
         drawBoard(canvas);
         drawNumbers(canvas);
+
+//        invalidate();
     }
 
     @Override
