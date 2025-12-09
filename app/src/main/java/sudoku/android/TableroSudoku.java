@@ -31,7 +31,7 @@ public class TableroSudoku extends View {
     protected void onMeasure(int width, int height) {
         super.onMeasure(width, height);
 
-        int dimension = Math.min(this.getWidth(), this.getHeight());
+        int dimension = Math.min(this.getMeasuredWidth(), this.getMeasuredHeight());
         celdaSize = dimension / 9;
 
         setMeasuredDimension(dimension, dimension); // 9x9
@@ -62,7 +62,7 @@ public class TableroSudoku extends View {
 
     private void drawBoard(Canvas canvas) {
         for (int c = 0; c < 10; c++) {
-            if (c % 3 == 0) {
+            if (c % 3 == 0) { // cada 3 líneas horizontales
                 drawThickLine();
             } else {
                 drawThinLine();
@@ -72,7 +72,7 @@ public class TableroSudoku extends View {
         }
 
         for (int r = 0; r < 10; r++) {
-            if (r % 3 == 0) {
+            if (r % 3 == 0) { // cada 3 líneas verticales
                 drawThickLine();
             } else {
                 drawThinLine();
@@ -82,4 +82,5 @@ public class TableroSudoku extends View {
 
         }
     }
+
 }

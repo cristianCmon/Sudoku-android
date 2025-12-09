@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Sudoku-android</string>
     <string name="title_activity_main2">MainActivity2</string>
+
+    <string name="Uno">1</string>
+    <string name="Dos">2</string>
+    <string name="Tres">3</string>
+    <string name="Cuatro">4</string>
+    <string name="Cinco">5</string>
+    <string name="Seis">6</string>
+    <string name="Siete">7</string>
+    <string name="Ocho">8</string>
+    <string name="Nueve">9</string>
 </resources>
