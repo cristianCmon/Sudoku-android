@@ -147,7 +147,7 @@ public class MainActivity4 extends AppCompatActivity {
 //                resolverSudoku.mostrarSudokuConsola();
             }
         });
-
+        // TODO RECOLOCAR BOTÓN PISTA, OCULTAR SI NO SE JUEGA EN FÁCIL
         // Botón Pista
         btnPista = findViewById(R.id.btnPista);
         btnPista.setOnClickListener(new View.OnClickListener() {
