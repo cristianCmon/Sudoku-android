@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,20 +8,19 @@
 
     <sudoku.android.TableroSudoku
         android:id="@+id/tableroSudoku"
-        custom:colorTablero="#000000"
-        custom:colorRellenarCelda="#6600DDFF"
-        custom:colorResaltarCeldas="#2600DDFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         custom:colorLetra="#000000"
-        custom:colorLetraResuelta="#000000"
+        custom:colorLetraResuelta="#BB0000"
+        custom:colorRellenarCelda="#6600DDFF"
 
+        custom:colorResaltarCeldas="#2600DDFF"
+        custom:colorTablero="#000000"
         custom:layout_constraintBottom_toBottomOf="parent"
         custom:layout_constraintEnd_toEndOf="parent"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toTopOf="parent"
 
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
-    </sudoku.android.TableroSudoku>
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toTopOf="parent"></sudoku.android.TableroSudoku>
 
     <LinearLayout
         android:layout_width="409dp"
@@ -46,8 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="0dp"
-            android:textSize="18sp"
-            android:text="@string/Dos" />
+            android:text="@string/Dos"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn3"
@@ -55,8 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="0dp"
-            android:textSize="18sp"
-            android:text="@string/Tres" />
+            android:text="@string/Tres"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn4"
@@ -64,8 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="0dp"
-            android:textSize="18sp"
-            android:text="@string/Cuatro" />
+            android:text="@string/Cuatro"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn5"
@@ -73,8 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="0dp"
-            android:textSize="18sp"
-            android:text="@string/Cinco" />
+            android:text="@string/Cinco"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn6"
@@ -82,8 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="0dp"
-            android:textSize="18sp"
-            android:text="@string/Seis" />
+            android:text="@string/Seis"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn7"
@@ -91,8 +89,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="0dp"
-            android:textSize="18sp"
-            android:text="@string/Siete" />
+            android:text="@string/Siete"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn8"
@@ -100,8 +98,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="0dp"
-            android:textSize="18sp"
-            android:text="@string/Ocho" />
+            android:text="@string/Ocho"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn9"
@@ -109,8 +107,74 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="0dp"
-            android:textSize="18sp"
-            android:text="@string/Nueve" />
+            android:text="@string/Nueve"
+            android:textSize="18sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnPista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="29dp"
+        android:text="Pista"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toStartOf="@+id/btnRendirse"
+        custom:layout_constraintHorizontal_bias="0.5"
+        custom:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnRendirse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="29dp"
+        android:text="Rendirse"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toStartOf="@+id/btnResolver"
+        custom:layout_constraintHorizontal_bias="0.5"
+        custom:layout_constraintStart_toEndOf="@+id/btnPista" />
+
+    <Button
+        android:id="@+id/btnResolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="29dp"
+        android:text="Resolver"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintHorizontal_bias="0.5"
+        custom:layout_constraintStart_toEndOf="@+id/btnRendirse" />
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Sudoku Cracker"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintHorizontal_bias="0.5"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDificultad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:text="Dificultad"
+        custom:layout_constraintBottom_toTopOf="@+id/tableroSudoku"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toBottomOf="@+id/tvTitulo" />
+
+    <TextView
+        android:id="@+id/tvTemporizador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="33dp"
+        android:text="Temporizador"
+        custom:layout_constraintBottom_toTopOf="@+id/tableroSudoku"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintTop_toBottomOf="@+id/tvTitulo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

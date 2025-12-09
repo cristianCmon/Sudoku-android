@@ -15,16 +15,41 @@ public class ResolverSudoku {
         filaSeleccionada = -1;
         columnaSeleccionada = -1;
 
-        tablero = new int[9][9];
+        generarNuevo();
+        prueba();
+//        tablero = new int[9][9];
 
         // Crea tablero vacío (lleno de 0s)
-        for (int f = 0; f < 9; f++) {
-            for (int c = 0; c < 9; c++) {
-                tablero[f][c] = 0;
-            }
-        }
+//        for (int f = 0; f < 9; f++) {
+//            for (int c = 0; c < 9; c++) {
+//                tablero[f][c] = 0;
+//            }
+//        }
+
         // Almacenará celdas vacías
         indiceCajaVacia = new ArrayList<>();
+    }
+
+//    public ResolverSudoku(int[][] tableroPropuesto) {
+//        filaSeleccionada = -1;
+//        columnaSeleccionada = -1;
+//
+//        tablero = tableroPropuesto;
+//
+//        // Almacenará celdas vacías
+//        indiceCajaVacia = new ArrayList<>();
+//    }
+
+    private void prueba() {
+        tablero[0][0] = 0;
+        tablero[1][1] = 0;
+        tablero[2][2] = 0;
+        tablero[3][3] = 0;
+        tablero[4][4] = 0;
+        tablero[5][5] = 0;
+        tablero[6][6] = 0;
+        tablero[7][7] = 0;
+        tablero[8][8] = 0;
     }
 
     private void getIndicesCajaVacia() {
@@ -72,6 +97,10 @@ public class ResolverSudoku {
 
     public void setColumnaSeleccionada(int columna) {
         this.columnaSeleccionada = columna;
+    }
+
+    public void generarNuevo() {
+        tablero = Sudoku.generar();
     }
 
     public void mostrarSudokuConsola() {

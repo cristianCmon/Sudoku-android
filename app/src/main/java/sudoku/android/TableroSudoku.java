@@ -190,4 +190,8 @@ public class TableroSudoku extends View {
         return resolverSudoku;
     }
 
+    public void nuevoSudoku() {
+        resolverSudoku.generarNuevo();
+    }
+
 }

@@ -1,21 +1,28 @@
 package sudoku.android;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity4 extends AppCompatActivity {
 
     private TableroSudoku tableroJuego;
     private ResolverSudoku resolverSudoku;
     private int[][] rejilla;
-    private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
+    private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnNuevo, btnRendirse, btnResolver;
+    public static List<Button> botonera = new ArrayList<>();
 
 
     @Override
@@ -31,16 +38,15 @@ public class MainActivity4 extends AppCompatActivity {
         });
 
         activarComponentesActivity();
+        activarBotonera(true);
     }
 
     public void activarComponentesActivity() {
-        System.out.println("HOLA VISTA PARTIDA-SUDOKU");
         tableroJuego = findViewById(R.id.tableroSudoku);
         resolverSudoku = tableroJuego.getResolverSudoku();
 
-        rejilla = Sudoku.generar();
-        Sudoku.mostrarSudokuConsola(rejilla);
-
+//        rejilla = Sudoku.generar();
+//        Sudoku.mostrarSudokuConsola(rejilla);
 
         // Botón 1
         btn1 = findViewById(R.id.btn1);
@@ -140,6 +146,71 @@ public class MainActivity4 extends AppCompatActivity {
                 resolverSudoku.mostrarSudokuConsola();
             }
         });
+
+        // Botón Pista
+        btnNuevo = findViewById(R.id.btnPista);
+        btnNuevo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // Botón Rendirse
+        btnRendirse = findViewById(R.id.btnRendirse);
+        btnRendirse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { // TODO POSIBLE REFACTORIZACIÓN
+                AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                alertaSalir.setTitle("Rendición");
+                alertaSalir.setMessage("\n¿Seguro que quieres abandonar?\n");
+                alertaSalir.setCancelable(false);
+
+                alertaSalir.setPositiveButton("Abandonar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(MainActivity4.this, MainActivity.class);
+                        startActivity(intent);
+
+                        dialog.dismiss();
+                    }
+                });
+
+                alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertaSalir.show();
+            }
+        });
+
+        // Botón Resolver
+        btnResolver = findViewById(R.id.btnResolver);
+        btnResolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // Grupo botonera
+        botonera.add(btn1);
+        botonera.add(btn2);
+        botonera.add(btn3);
+        botonera.add(btn4);
+        botonera.add(btn5);
+        botonera.add(btn6);
+        botonera.add(btn7);
+        botonera.add(btn8);
+        botonera.add(btn9);
+    }
+
+    public static void activarBotonera(boolean activar) {
+        for (Button b : botonera) {
+            b.setEnabled(activar);
+        }
     }
 
 }

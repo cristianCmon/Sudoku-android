@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) { // TODO POSIBLE REFACTORIZACIÓN
                 AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
                 alertaSalir.setTitle("¡Detente!");
-                alertaSalir.setMessage("\n¿Seguro que quieres abandonar?\n");
+                alertaSalir.setMessage("\n¿Estás seguro de que quieres salir?\n");
                 alertaSalir.setCancelable(false);
 
                 alertaSalir.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
