@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -19,10 +20,12 @@ import java.util.List;
 
 public class MainActivity4 extends AppCompatActivity {
 
+    TextView tvDificultad, tvTemporizador;
     private TableroSudoku tableroJuego;
     private ResolverSudoku resolverSudoku;
     private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPista, btnRendirse, btnResolver;
     public static List<Button> botonera = new ArrayList<>();
+    String[] datosJugador;
 
 
     @Override
@@ -36,6 +39,13 @@ public class MainActivity4 extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent datosRecibidos = getIntent();
+
+        if (datosRecibidos != null) {
+            datosJugador = datosRecibidos.getStringArrayExtra("DATOS_PARTIDA");
+            System.out.println(datosJugador[0] + " - " + datosJugador[1]);
+        }
 
         activarComponentesActivity();
         activarBotonera(true);
@@ -257,6 +267,12 @@ public class MainActivity4 extends AppCompatActivity {
         botonera.add(btn7);
         botonera.add(btn8);
         botonera.add(btn9);
+
+        // Textos Estado
+        tvDificultad = findViewById(R.id.tvDificultad);
+        tvDificultad.setText("Dificultad " + datosJugador[1]);
+        tvTemporizador = findViewById(R.id.tvTemporizador);
+
     }
 
     public static void activarBotonera(boolean activar) {
