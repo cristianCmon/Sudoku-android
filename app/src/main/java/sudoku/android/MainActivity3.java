@@ -27,6 +27,8 @@ public class MainActivity3 extends AppCompatActivity {
 
     public void activarComponentesActivity() {
 //        TODO VISTA PARA SOLICITAR NOMBRE USUARIO Y NIVEL DIFICULTAD
+//        TODO TÍTULO, TEXTAREA PARA NOMBRE Y GROUPBUTTON PARA SELECCIONAR DIFICULTAD, BOTÓN EMPEZAR
+        // https://www.youtube.com/watch?v=ZuhkYS5AEYM
         System.out.println("HOLA VISTA INTRODUCE NOMBRE Y SELECCIONA DIFICULTAD");
     }
 }

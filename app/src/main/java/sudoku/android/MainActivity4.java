@@ -21,7 +21,6 @@ public class MainActivity4 extends AppCompatActivity {
 
     private TableroSudoku tableroJuego;
     private ResolverSudoku resolverSudoku;
-    private int[][] sudokuIncompletoJugador;
     private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPista, btnRendirse, btnResolver;
     public static List<Button> botonera = new ArrayList<>();
 
@@ -45,9 +44,6 @@ public class MainActivity4 extends AppCompatActivity {
     public void activarComponentesActivity() {
         tableroJuego = findViewById(R.id.tableroSudoku);
         resolverSudoku = tableroJuego.getResolverSudoku();
-
-//        rejilla = Sudoku.generar();
-//        Sudoku.mostrarSudokuConsola(rejilla);
 
         // Botón 1
         btn1 = findViewById(R.id.btn1);
