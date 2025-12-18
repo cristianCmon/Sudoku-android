@@ -287,8 +287,10 @@ public class MainActivity4 extends AppCompatActivity {
                             alertaSalir.show();
                         }
                     } else {
+//                        TODO COMPROBAR SI HAY POSICIONES VACIAS
                         resolverSudoku.setTablero(resolverSudoku.getTableroCompleto());
                         tableroJuego.invalidate();
+
                         btnPista.setVisibility(View.GONE);
                         btnRendirse.setVisibility(View.GONE);
                         btnResolver.setText("Volver menú principal");
