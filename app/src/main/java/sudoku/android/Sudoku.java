@@ -98,6 +98,7 @@ public class Sudoku {
 
     public static int[][] vaciarSudoku(int[][] originalCompleto) {
         int[][] sudokuIncompletoJugador = new int[9][9];
+        int columnasVaciasFila = 4;
 
         // Rellenamos para evitar paso por referencia
         for (int i = 0; i < 9; i++) {
@@ -109,25 +110,68 @@ public class Sudoku {
         int[] cifrasCero;
 
         for (int i = 0; i < 9; i++) {
-            cifrasCero = posicionesCero();
-            sudokuIncompletoJugador[i][cifrasCero[0]] = 0;
-//            sudokuIncompletoJugador[i][cifrasCero[1]] = 0;
-//            sudokuIncompletoJugador[i][cifrasCero[2]] = 0;
-//            sudokuIncompletoJugador[i][cifrasCero[3]] = 0;
-//            sudokuIncompletoJugador[i][cifrasCero[4]] = 0;
-//            sudokuIncompletoJugador[i][cifrasCero[5]] = 0;
-//            sudokuIncompletoJugador[i][cifrasCero[6]] = 0;
+            cifrasCero = posicionesCero(columnasVaciasFila);
+
+            for (int j = 0; j < cifrasCero.length; j++) {
+                sudokuIncompletoJugador[i][cifrasCero[j]] = 0;
+            }
+
         }
 
         return sudokuIncompletoJugador;
     }
+//    public static int[][] vaciarSudoku(int[][] originalCompleto, String dificultad) {
+//        int[][] sudokuIncompletoJugador = new int[9][9];
+//        int columnasVaciasFila = 0;
+//
+//        // Rellenamos para evitar paso por referencia
+//        for (int i = 0; i < 9; i++) {
+//            for (int j = 0; j < 9; j++) {
+//                sudokuIncompletoJugador[i][j] = originalCompleto[i][j];
+//            }
+//        }
+//
+//        switch (dificultad) {
+//            case "Fácil":
+//                columnasVaciasFila = 2;
+//                break;
+//            case "Normal":
+//                columnasVaciasFila = 4;
+//                break;
+//            case "Difícil":
+//                columnasVaciasFila = 6;
+//                break;
+//        }
+//
+//        int[] cifrasCero;
+//
+//        for (int i = 0; i < 9; i++) {
+//            cifrasCero = posicionesCero(columnasVaciasFila);
+//
+//            for (int j = 0; j < cifrasCero.length; j++) {
+//                sudokuIncompletoJugador[i][cifrasCero[j]] = 0;
+//            }
+//
+//
+////            cifrasCero = posicionesCero();
+////            sudokuIncompletoJugador[i][cifrasCero[0]] = 0;
+////            sudokuIncompletoJugador[i][cifrasCero[1]] = 0;
+////            sudokuIncompletoJugador[i][cifrasCero[2]] = 0;
+////            sudokuIncompletoJugador[i][cifrasCero[3]] = 0;
+////            sudokuIncompletoJugador[i][cifrasCero[4]] = 0;
+////            sudokuIncompletoJugador[i][cifrasCero[5]] = 0;
+////            sudokuIncompletoJugador[i][cifrasCero[6]] = 0;
+//        }
+//
+//        return sudokuIncompletoJugador;
+//    }
 
-    private static int[] posicionesCero() {
+    private static int[] posicionesCero(int columnasVaciasFila) {
         HashSet<Integer> comprobadorPosiciones = new HashSet<>();
         Random random = new Random();
         int contador = 0;
         int posicionObjetivo;
-        int[] posicionesVacias = new int[1];
+        int[] posicionesVacias = new int[columnasVaciasFila];
 
         do {
             posicionObjetivo = random.nextInt(0, 9);
@@ -137,7 +181,7 @@ public class Sudoku {
                 contador++;
             }
 
-        } while (contador < 1);
+        } while (contador < (columnasVaciasFila));
 
         return posicionesVacias;
     }

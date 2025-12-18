@@ -6,6 +6,8 @@ public class ResolverSudoku {
 
     int[][] tablero, tableroCompleto;
     boolean[][] esClicable;
+
+    String nivelDificultad = "";
     ArrayList<ArrayList<Object>> indiceCajaVacia;
 
     private int filaSeleccionada;
@@ -100,9 +102,18 @@ public class ResolverSudoku {
         this.columnaSeleccionada = columna;
     }
 
+    public String getNivelDificultad() {
+        return this.nivelDificultad;
+    }
+
+    public void setNivelDificultad(String dificultadSeleccionada) {
+        this.nivelDificultad = dificultadSeleccionada;
+    }
+
     public void generarNuevo() {
         tableroCompleto = Sudoku.generar();
         tablero = Sudoku.vaciarSudoku(tableroCompleto);
+//        tablero = Sudoku.vaciarSudoku(tableroCompleto, this.nivelDificultad);
         esClicable = Sudoku.posicionesClicablesSudoku(tablero); // las que contengan 0 de inicio serán clicables
     }
 

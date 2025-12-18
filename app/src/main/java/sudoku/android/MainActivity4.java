@@ -25,7 +25,7 @@ public class MainActivity4 extends AppCompatActivity {
     private ResolverSudoku resolverSudoku;
     private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPista, btnRendirse, btnResolver;
     public static List<Button> botonera = new ArrayList<>();
-    String[] datosJugador;
+    String[] datosJugador; // 0 - Nombre, 1 - Dificultad
 
 
     @Override
@@ -49,11 +49,15 @@ public class MainActivity4 extends AppCompatActivity {
 
         activarComponentesActivity();
         activarBotonera(true);
+        System.out.println(resolverSudoku.getNivelDificultad());
     }
 
     public void activarComponentesActivity() {
+        System.out.println(datosJugador[1]);
         tableroJuego = findViewById(R.id.tableroSudoku);
+//        resolverSudoku = new ResolverSudoku();
         resolverSudoku = tableroJuego.getResolverSudoku();
+        resolverSudoku.setNivelDificultad(datosJugador[1]);
 
         // Botón 1
         btn1 = findViewById(R.id.btn1);
@@ -273,6 +277,13 @@ public class MainActivity4 extends AppCompatActivity {
         tvDificultad.setText("Dificultad " + datosJugador[1]);
         tvTemporizador = findViewById(R.id.tvTemporizador);
 
+        if (!resolverSudoku.getNivelDificultad().equals("Fácil")) {
+            btnPista.setVisibility(View.GONE);
+        }
+
+        if (resolverSudoku.getNivelDificultad().equals("Difícil")) {
+            btnResolver.setEnabled(false);
+        }
     }
 
     public static void activarBotonera(boolean activar) {

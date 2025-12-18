@@ -23,8 +23,10 @@
         custom:layout_constraintTop_toTopOf="parent"></sudoku.android.TableroSudoku>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         custom:layout_constraintTop_toBottomOf="@+id/tableroSudoku"
         tools:layout_editor_absoluteX="1dp">
@@ -115,34 +117,34 @@
         android:id="@+id/btnPista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="50dp"
         android:text="Pista"
         custom:layout_constraintBottom_toBottomOf="parent"
-        custom:layout_constraintEnd_toStartOf="@+id/btnRendirse"
+        custom:layout_constraintEnd_toStartOf="@+id/btnResolver"
         custom:layout_constraintHorizontal_bias="0.5"
-        custom:layout_constraintStart_toStartOf="parent" />
+        custom:layout_constraintStart_toEndOf="@+id/btnRendirse" />
 
     <Button
         android:id="@+id/btnRendirse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="50dp"
         android:text="Rendirse"
         custom:layout_constraintBottom_toBottomOf="parent"
-        custom:layout_constraintEnd_toStartOf="@+id/btnResolver"
+        custom:layout_constraintEnd_toStartOf="@+id/btnPista"
         custom:layout_constraintHorizontal_bias="0.5"
-        custom:layout_constraintStart_toEndOf="@+id/btnPista" />
+        custom:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnResolver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="50dp"
         android:text="Resolver"
         custom:layout_constraintBottom_toBottomOf="parent"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintHorizontal_bias="0.5"
-        custom:layout_constraintStart_toEndOf="@+id/btnRendirse" />
+        custom:layout_constraintStart_toEndOf="@+id/btnPista" />
 
     <TextView
         android:id="@+id/tvTitulo"
