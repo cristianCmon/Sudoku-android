@@ -20,6 +20,7 @@ public class TableroSudoku extends View {
     private final Paint pintarColorRellenarCelda = new Paint();
     private final Paint pintarColorResaltarCeldas = new Paint();
     private final Paint pintarLetra = new Paint();
+    private final Paint pintarLetraResuelta = new Paint();
 
     private final Rect pintarLetraBordes = new Rect();
 
@@ -73,6 +74,10 @@ public class TableroSudoku extends View {
         pintarLetra.setColor(colorLetra);
         pintarLetra.setAntiAlias(true);
 
+        pintarLetraResuelta.setStyle(Paint.Style.FILL);
+        pintarLetraResuelta.setColor(colorLetraResuelta);
+        pintarLetraResuelta.setAntiAlias(true);
+
         colorCelda(canvas, resolverSudoku.getFilaSeleccionada(), resolverSudoku.getColumnaSeleccionada());
         canvas.drawRect(0, 0, getWidth(), getHeight(), pintarColorTablero);
         drawBoard(canvas);
@@ -119,7 +124,7 @@ public class TableroSudoku extends View {
                 }
             }
         }
-
+        // TODO REVISAR ESTA PINTADA
         pintarLetra.setColor(colorLetraResuelta);
 
         for (ArrayList<Object> letra : resolverSudoku.getIndiceCajaVacia()) {
@@ -140,10 +145,10 @@ public class TableroSudoku extends View {
 
     private void colorCelda(Canvas canvas, int f, int c) {
         if ((resolverSudoku.getColumnaSeleccionada() != -1) && (resolverSudoku.getFilaSeleccionada() != -1)) {
-            // Resalta fila de celda pulsada
-            canvas.drawRect(0, (f - 1) * celdaSize, celdaSize * 9, f * celdaSize, pintarColorResaltarCeldas);
-            // Resalta columna de celda pulsada
-            canvas.drawRect((c - 1) * celdaSize, 0, c * celdaSize, celdaSize * 9, pintarColorResaltarCeldas);
+            // Resalta fila de celda pulsada, EMBELLECEDOR OPCIONAL
+//            canvas.drawRect(0, (f - 1) * celdaSize, celdaSize * 9, f * celdaSize, pintarColorResaltarCeldas);
+            // Resalta columna de celda pulsada, EMBELLECEDOR OPCIONAL
+//            canvas.drawRect((c - 1) * celdaSize, 0, c * celdaSize, celdaSize * 9, pintarColorResaltarCeldas);
             // Resalta celda pulsada
             canvas.drawRect((c - 1) * celdaSize, (f - 1) * celdaSize, c * celdaSize, f * celdaSize, pintarColorRellenarCelda);
         }

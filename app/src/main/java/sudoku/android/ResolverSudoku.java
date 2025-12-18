@@ -74,8 +74,40 @@ public class ResolverSudoku {
                 this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] = 0;
             } else {
                 this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] = numero;
+                System.out.println(comprobarNumeroTablero(this.filaSeleccionada - 1, this.columnaSeleccionada - 1));
+//                comprobarNumeroTablero(numero);
             }
         }
+    }
+    // TODO RESOLVER PINTAR ROJO
+    private boolean comprobarNumeroTablero(int fila, int columna) {
+        if (this.tablero[fila][columna] > 0) { // Si no está vacío...
+            for (int i = 0; i < 9; i++) {
+                // Comprobador Horizontal
+                if (this.tablero[i][columna] == this.tablero[fila][columna] && (fila != i)) {
+                    return false;
+                }
+                // Comprobador Vertical
+                if (this.tablero[fila][i] == this.tablero[fila][columna] && (columna != i)) {
+                    return false;
+                }
+            }
+
+            // División de enteros, obtendremos 0-1-2
+            int filaBloque = fila / 3;
+            int columnaBloque = columna / 3;
+
+            // Comprobador Bloque
+            for (int f = filaBloque * 3; f < (filaBloque * 3) + 3; f++) {
+                for (int c = columnaBloque * 3; c < (columnaBloque * 3) + 3; c++) {
+                    if (this.tablero[f][c] == this.tablero[fila][columna] && (fila != f) && (columna != c)) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     public int[][] getTablero() {
@@ -142,5 +174,17 @@ public class ResolverSudoku {
         }
 
         System.out.println("***********************\n");
+    }
+
+    public boolean estaCompletado() {
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
+                if (tablero[i][j] == 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
