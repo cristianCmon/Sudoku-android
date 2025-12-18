@@ -81,7 +81,7 @@
             android:id="@+id/rbIntermedio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Intermedia" />
+            android:text="Normal" />
 
         <RadioButton
             android:id="@+id/rbDificil"

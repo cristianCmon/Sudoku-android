@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ResolverSudoku {
 
     int[][] tablero, tableroCompleto;
+    boolean[][] esClicable;
     ArrayList<ArrayList<Object>> indiceCajaVacia;
 
     private int filaSeleccionada;
@@ -65,7 +66,7 @@ public class ResolverSudoku {
     }
 
     public void setPosicionNumero(int numero) {
-        if ((this.filaSeleccionada != -1) && (this.columnaSeleccionada != -1)) {
+        if ((this.filaSeleccionada != -1) && (this.columnaSeleccionada != -1) && esClicable[this.filaSeleccionada - 1][this.columnaSeleccionada - 1]) {
             // TODO Función de borrado temporal, borra número si se vuelve a pulsar
             if (this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] == numero) {
                 this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] = 0;
@@ -102,6 +103,7 @@ public class ResolverSudoku {
     public void generarNuevo() {
         tableroCompleto = Sudoku.generar();
         tablero = Sudoku.vaciarSudoku(tableroCompleto);
+        esClicable = Sudoku.posicionesClicablesSudoku(tablero); // las que contengan 0 de inicio serán clicables
     }
 
     public void mostrarSudokuConsola() {

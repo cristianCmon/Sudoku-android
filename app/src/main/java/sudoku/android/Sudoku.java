@@ -82,6 +82,20 @@ public class Sudoku {
         return true;
     }
 
+    public static boolean[][] posicionesClicablesSudoku(int[][] tableroPartida) {
+        boolean[][] tableroPosicionesClicables = new boolean[9][9];
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (tableroPartida[i][j] == 0) {
+                    tableroPosicionesClicables[i][j] = true;
+                }
+            }
+        }
+
+        return tableroPosicionesClicables;
+    }
+
     public static int[][] vaciarSudoku(int[][] originalCompleto) {
         int[][] sudokuIncompletoJugador = new int[9][9];
 
