@@ -98,7 +98,7 @@ public class Sudoku {
 
     public static int[][] vaciarSudoku(int[][] originalCompleto) {
         int[][] sudokuIncompletoJugador = new int[9][9];
-        int columnasVaciasFila = 4;
+        int columnasVaciasFila = 1;
 
         // Rellenamos para evitar paso por referencia
         for (int i = 0; i < 9; i++) {

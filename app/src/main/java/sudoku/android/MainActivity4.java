@@ -26,7 +26,6 @@ public class MainActivity4 extends AppCompatActivity {
     private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPista, btnRendirse, btnResolver;
     public static List<Button> botonera = new ArrayList<>();
     String[] datosJugador; // 0 - Nombre, 1 - Dificultad
-    boolean estaCompletado = false;
 
 
     @Override
@@ -60,9 +59,8 @@ public class MainActivity4 extends AppCompatActivity {
         tvDificultad.setText("Dificultad " + datosJugador[1]);
         tvTemporizador = findViewById(R.id.tvTemporizador);
 
-
+        // Setup tablero
         tableroJuego = findViewById(R.id.tableroSudoku);
-//        resolverSudoku = new ResolverSudoku();
         resolverSudoku = tableroJuego.getResolverSudoku();
         resolverSudoku.setNivelDificultad(datosJugador[1]);
 
@@ -227,24 +225,30 @@ public class MainActivity4 extends AppCompatActivity {
 //                    Intent intent = new Intent(MainActivity4.this, MainActivity.class);
 //                    startActivity(intent);
 //                }
-                if (resolverSudoku.getNivelDificultad().equals("Difícil")) {
-                    System.out.println("RESUELTO?...");
-                    if (Arrays.deepEquals(resolverSudoku.tablero, resolverSudoku.tableroCompleto)) {
-                        System.out.println("COMPLETADO CON EXITO");
-                        // TODO POSIBLE REFACTORIZACIÓN
-                        AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
-                        alertaSalir.setTitle("ENHORABUENA");
-                        alertaSalir.setMessage("\nLo has logrado, bien hecho\n");
-                        alertaSalir.setCancelable(false);
+                if (btnResolver.getText().toString().equals("Volver menú principal")) {
+                    Intent intent = new Intent(MainActivity4.this, MainActivity.class);
+                    startActivity(intent);
 
-                        alertaSalir.setPositiveButton("Guardar y Volver", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(MainActivity4.this, MainActivity.class);
-                                startActivity(intent);
+                } else {
 
-                                dialog.dismiss();
-                            }
-                        });
+                    if (resolverSudoku.getNivelDificultad().equals("Difícil")) {
+//                    System.out.println("RESUELTO?...");
+                        if (Arrays.deepEquals(resolverSudoku.tablero, resolverSudoku.tableroCompleto)) {
+                            System.out.println("COMPLETADO CON EXITO");
+                            // TODO POSIBLE REFACTORIZACIÓN
+                            AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                            alertaSalir.setTitle("ENHORABUENA");
+                            alertaSalir.setMessage("\nLo lograste, ¡bien hecho!\n");
+                            alertaSalir.setCancelable(false);
+
+                            alertaSalir.setPositiveButton("Guardar y Volver", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent intent = new Intent(MainActivity4.this, MainActivity.class);
+                                    startActivity(intent);
+
+                                    dialog.dismiss();
+                                }
+                            });
 
 //                    alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
 //                        @Override
@@ -253,16 +257,16 @@ public class MainActivity4 extends AppCompatActivity {
 //                        }
 //                    });
 
-                        alertaSalir.show();
+                            alertaSalir.show();
 
 
-                    } else {
-                        System.out.println("NO COINCIDE :(");
-                        // TODO POSIBLE REFACTORIZACIÓN
-                        AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
-                        alertaSalir.setTitle("Fallaste");
-                        alertaSalir.setMessage("\nSigue intentádolo, ¡ánimo!\n");
-                        alertaSalir.setCancelable(false);
+                        } else {
+                            System.out.println("NO COINCIDE :(");
+                            // TODO POSIBLE REFACTORIZACIÓN
+                            AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                            alertaSalir.setTitle("Fallaste");
+                            alertaSalir.setMessage("\nSigue intentádolo, ¡ánimo!\n");
+                            alertaSalir.setCancelable(false);
 
 //                    alertaSalir.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
 //                        public void onClick(DialogInterface dialog, int id) {
@@ -273,16 +277,25 @@ public class MainActivity4 extends AppCompatActivity {
 //                        }
 //                    });
 
-                        alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                            alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                        alertaSalir.show();
+                            alertaSalir.show();
+                        }
+                    } else {
+                        resolverSudoku.setTablero(resolverSudoku.getTableroCompleto());
+                        tableroJuego.invalidate();
+                        btnPista.setVisibility(View.GONE);
+                        btnRendirse.setVisibility(View.GONE);
+                        btnResolver.setText("Volver menú principal");
                     }
                 }
+
+
 //                System.out.println("RESUELTO?...");
 //                if (Arrays.deepEquals(resolverSudoku.tablero, resolverSudoku.tableroCompleto)) {
 //                    System.out.println("COMPLETADO CON EXITO");
@@ -341,13 +354,13 @@ public class MainActivity4 extends AppCompatActivity {
                 // TODO ADAPTAR PARA MOSTRAR SOLUCIÓN Y SALIR
                 // TODO METER DENTRO DE ALERTS - OJO CON NIVEL DIFÍCIL
                 // TODO LO SIGUIENTE FUNCIONA EN FACIL - NORMAL
-                if (btnResolver.getText().toString().equals("Resolver")) {
-                    btnPista.setVisibility(View.GONE);
-                    btnRendirse.setVisibility(View.GONE);
-                    btnResolver.setText("Volver menú principal");
-                } else {
-                    btnResolver.setText("Resolver");
-                }
+//                if (btnResolver.getText().toString().equals("Resolver")) {
+//                    btnPista.setVisibility(View.GONE);
+//                    btnRendirse.setVisibility(View.GONE);
+//                    btnResolver.setText("Volver menú principal");
+//                } else {
+//                    btnResolver.setText("Resolver");
+//                }
             }
         });
 

@@ -114,6 +114,14 @@ public class ResolverSudoku {
         return this.tablero;
     }
 
+    public int[][] getTableroCompleto() {
+        return this.tableroCompleto;
+    }
+
+    public void setTablero(int[][] tableroPropuesto) {
+        this.tablero = tableroPropuesto;
+    }
+
     public ArrayList<ArrayList<Object>> getIndiceCajaVacia() {
         return this.indiceCajaVacia;
     }
@@ -187,4 +195,5 @@ public class ResolverSudoku {
 
         return true;
     }
+
 }

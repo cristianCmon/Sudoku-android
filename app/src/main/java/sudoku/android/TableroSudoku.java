@@ -195,6 +195,8 @@ public class TableroSudoku extends View {
         return resolverSudoku;
     }
 
+
+
     public void fijarDificultad(String dificultad) {
         this.resolverSudoku.setNivelDificultad(dificultad);
     }
