@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 
 public class MainActivity3 extends AppCompatActivity implements TextWatcher {
 
@@ -43,15 +42,10 @@ public class MainActivity3 extends AppCompatActivity implements TextWatcher {
         });
 
         activarComponentesActivity();
-        System.out.println("Jugador: " + nombreJugador + " - Dificultad: " + dificultadPartida);
+//        System.out.println("Jugador: " + nombreJugador + " - Dificultad: " + dificultadPartida);
     }
 
     public void activarComponentesActivity() {
-//        TODO VISTA PARA SOLICITAR NOMBRE USUARIO Y NIVEL DIFICULTAD
-//        TODO TÍTULO, TEXTAREA PARA NOMBRE Y GROUPBUTTON PARA SELECCIONAR DIFICULTAD, BOTÓN EMPEZAR
-        // https://www.youtube.com/watch?v=ZuhkYS5AEYM
-        System.out.println("HOLA VISTA INTRODUCE NOMBRE Y SELECCIONA DIFICULTAD");
-
         // CAMPO NOMBRE
         etNombre = findViewById(R.id.etNombre);
         etNombre.addTextChangedListener(this);
@@ -82,9 +76,6 @@ public class MainActivity3 extends AppCompatActivity implements TextWatcher {
                 if (botonPulsado != null) {
                     dificultadSeleccionada = true;
                     dificultadPartida = botonPulsado.getText().toString();
-                    System.out.println(botonPulsado.getText());
-                    // Por ejemplo, mostrar un Toast
-                    // Toast.makeText(MainActivity.this, "Seleccionado: " + checkedRadioButton.getText(), Toast.LENGTH_SHORT).show();
                 } else {
                     dificultadSeleccionada = false;
                 }
@@ -92,7 +83,6 @@ public class MainActivity3 extends AppCompatActivity implements TextWatcher {
                 btnJugar.setEnabled(nombreIntroducido && dificultadSeleccionada);
             }
         });
-
     }
 
     @Override
@@ -106,8 +96,6 @@ public class MainActivity3 extends AppCompatActivity implements TextWatcher {
         }
 
         btnJugar.setEnabled(nombreIntroducido && dificultadSeleccionada);
-
-        System.out.println(nombreJugador);
     }
 
     @Override

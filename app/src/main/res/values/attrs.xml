@@ -6,5 +6,7 @@
         <attr name="colorResaltarCeldas" format="color"/>
         <attr name="colorLetra" format="color"/>
         <attr name="colorLetraResuelta" format="color"/>
+        <attr name="colorLetraPista" format="color"/>
+        <attr name="colorLetraIncorrecta" format="color"/>
     </declare-styleable>
 </resources>

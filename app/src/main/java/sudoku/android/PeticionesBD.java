@@ -1,6 +1,9 @@
 package sudoku.android;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +44,7 @@ public final class PeticionesBD {
         limpiarConexion();
     }
 
-    public static void guardarPuntuacion(Puntuaciones puntuacion) {
+    public static void guardarPuntuacion(Context context, Puntuaciones puntuacion) {
         establecerConexion();
 
         Call<Puntuaciones> llamada = api.crearPuntuacionSudoku(
@@ -51,13 +54,16 @@ public final class PeticionesBD {
         llamada.enqueue(new Callback<Puntuaciones>() {
             @Override
             public void onResponse(Call<Puntuaciones> call, Response<Puntuaciones> response) {
-                if (response.isSuccessful()) {
-                    System.out.println("Puntuación guardada con éxito");
-                }
+//                if (response.isSuccessful()) {
+//                    System.out.println("Puntuación guardada con éxito");
+//                }
+
+                Toast.makeText(context, "PUNTUACIÓN GUARDADA", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<Puntuaciones> call, Throwable t) {
+                Toast.makeText(context, "ERROR AL GUARDAR", Toast.LENGTH_LONG).show();
                 Log.d("ERROR guardarPuntuacion", t.toString());
             }
         });

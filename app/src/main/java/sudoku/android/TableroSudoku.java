@@ -13,8 +13,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+
 public class TableroSudoku extends View {
-    private final int colorTablero, colorRellenarCelda, colorResaltarCeldas, colorLetra, colorLetraResuelta;
+    private final int colorTablero, colorRellenarCelda, colorResaltarCeldas, colorLetra, colorLetraResuelta, colorLetraPista, colorLetraIncorrecta;
 
     private final Paint pintarColorTablero = new Paint();
     private final Paint pintarColorRellenarCelda = new Paint();
@@ -40,6 +41,9 @@ public class TableroSudoku extends View {
             colorResaltarCeldas = a.getInteger(R.styleable.TableroSudoku_colorResaltarCeldas, 0);
             colorLetra = a.getInteger(R.styleable.TableroSudoku_colorLetra, 0);
             colorLetraResuelta = a.getInteger(R.styleable.TableroSudoku_colorLetraResuelta, 0);
+            colorLetraPista = a.getInteger(R.styleable.TableroSudoku_colorLetraPista, 0);
+            colorLetraIncorrecta = a.getInteger(R.styleable.TableroSudoku_colorLetraIncorrecta, 0);
+
         } finally {
             a.recycle();
         }
@@ -80,8 +84,8 @@ public class TableroSudoku extends View {
 
         colorCelda(canvas, resolverSudoku.getFilaSeleccionada(), resolverSudoku.getColumnaSeleccionada());
         canvas.drawRect(0, 0, getWidth(), getHeight(), pintarColorTablero);
-        drawBoard(canvas);
-        drawNumbers(canvas);
+        pintarTablero(canvas);
+        pintarCifras(canvas);
 
 //        invalidate();
     }
@@ -107,7 +111,7 @@ public class TableroSudoku extends View {
         return esValido;
     }
 
-    private void drawNumbers(Canvas canvas) {
+    private void pintarCifras(Canvas canvas) {
         pintarLetra.setTextSize(celdaSize);
 
         for (int f = 0; f < 9; f++) {
@@ -120,12 +124,26 @@ public class TableroSudoku extends View {
                     ancho = pintarLetra.measureText(texto);
                     alto = pintarLetraBordes.height();
 
+                    // Pinta número de azul (intento de usuario)
+                    if (resolverSudoku.esClicable[f][c]) {
+                        pintarLetra.setColor(colorLetraResuelta);
+                    }
+                    // Pinta el número de naranja (pista)
+                    if (resolverSudoku.tableroPistasUsadas[f][c]) {
+                        pintarLetra.setColor(colorLetraPista);
+                    }
+                    // Pinta el número de rojo (número incorrecto y repeticiones)
+                    if (resolverSudoku.getNivelDificultad().equals("Fácil") || resolverSudoku.getNivelDificultad().equals("Normal")) {
+                        if (!resolverSudoku.comprobarNumeroTablero(f, c)) {
+                            pintarLetra.setColor(colorLetraIncorrecta);
+                        }
+                    }
+
                     canvas.drawText(texto, (c * celdaSize) + ((celdaSize - ancho) / 2), (f * celdaSize + celdaSize) - ((celdaSize - alto) / 2), pintarLetra);
+                    pintarLetra.setColor(colorLetra);
                 }
             }
         }
-        // TODO REVISAR ESTA PINTADA
-        pintarLetra.setColor(colorLetraResuelta);
 
         for (ArrayList<Object> letra : resolverSudoku.getIndiceCajaVacia()) {
             int f = (int) letra.get(0);
@@ -139,16 +157,15 @@ public class TableroSudoku extends View {
             alto = pintarLetraBordes.height();
 
             canvas.drawText(texto, (c * celdaSize) + ((celdaSize - ancho) / 2), (f * celdaSize + celdaSize) - ((celdaSize - alto) / 2), pintarLetra);
-
         }
     }
 
     private void colorCelda(Canvas canvas, int f, int c) {
         if ((resolverSudoku.getColumnaSeleccionada() != -1) && (resolverSudoku.getFilaSeleccionada() != -1)) {
             // Resalta fila de celda pulsada, EMBELLECEDOR OPCIONAL
-//            canvas.drawRect(0, (f - 1) * celdaSize, celdaSize * 9, f * celdaSize, pintarColorResaltarCeldas);
+            canvas.drawRect(0, (f - 1) * celdaSize, celdaSize * 9, f * celdaSize, pintarColorResaltarCeldas);
             // Resalta columna de celda pulsada, EMBELLECEDOR OPCIONAL
-//            canvas.drawRect((c - 1) * celdaSize, 0, c * celdaSize, celdaSize * 9, pintarColorResaltarCeldas);
+            canvas.drawRect((c - 1) * celdaSize, 0, c * celdaSize, celdaSize * 9, pintarColorResaltarCeldas);
             // Resalta celda pulsada
             canvas.drawRect((c - 1) * celdaSize, (f - 1) * celdaSize, c * celdaSize, f * celdaSize, pintarColorRellenarCelda);
         }
@@ -156,24 +173,24 @@ public class TableroSudoku extends View {
         invalidate(); // refresca tablero
     }
 
-    private void drawThickLine() {
+    private void pintarLineaGruesa() {
         pintarColorTablero.setStyle(Paint.Style.STROKE);
         pintarColorTablero.setStrokeWidth(10);
         pintarColorTablero.setColor(colorTablero);
     }
 
-    private void drawThinLine() {
+    private void pintarLineaFina() {
         pintarColorTablero.setStyle(Paint.Style.STROKE);
         pintarColorTablero.setStrokeWidth(4);
         pintarColorTablero.setColor(colorTablero);
     }
 
-    private void drawBoard(Canvas canvas) {
+    private void pintarTablero(Canvas canvas) {
         for (int c = 0; c < 10; c++) {
             if (c % 3 == 0) { // cada 3 líneas horizontales
-                drawThickLine();
+                pintarLineaGruesa();
             } else {
-                drawThinLine();
+                pintarLineaFina();
             }
 
             canvas.drawLine(celdaSize * c, 0, celdaSize * c, getWidth(), pintarColorTablero);
@@ -181,28 +198,17 @@ public class TableroSudoku extends View {
 
         for (int r = 0; r < 10; r++) {
             if (r % 3 == 0) { // cada 3 líneas verticales
-                drawThickLine();
+                pintarLineaGruesa();
             } else {
-                drawThinLine();
+                pintarLineaFina();
             }
 
             canvas.drawLine(0, celdaSize * r, getWidth(), celdaSize * r, pintarColorTablero);
-
         }
     }
 
     public ResolverSudoku getResolverSudoku() {
         return resolverSudoku;
-    }
-
-
-
-    public void fijarDificultad(String dificultad) {
-        this.resolverSudoku.setNivelDificultad(dificultad);
-    }
-
-    public void nuevoSudoku() {
-        resolverSudoku.generarNuevo();
     }
 
 }

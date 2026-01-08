@@ -11,7 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:colorLetra="#000000"
-        custom:colorLetraResuelta="#1e90ff"
+        custom:colorLetraResuelta="#0000FF"
+        custom:colorLetraPista="#FF8C00"
+        custom:colorLetraIncorrecta="#FF0000"
         custom:colorRellenarCelda="#6600DDFF"
 
         custom:colorResaltarCeldas="#2600DDFF"
@@ -165,6 +167,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="27dp"
         android:text="Dificultad"
+        android:textSize="20sp"
         custom:layout_constraintBottom_toTopOf="@+id/tableroSudoku"
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toBottomOf="@+id/tvTitulo" />
@@ -175,6 +178,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="33dp"
         android:text="Temporizador"
+        android:textSize="20sp"
         custom:layout_constraintBottom_toTopOf="@+id/tableroSudoku"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintTop_toBottomOf="@+id/tvTitulo" />

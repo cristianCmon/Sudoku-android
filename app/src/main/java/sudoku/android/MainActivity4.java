@@ -3,6 +3,8 @@ package sudoku.android;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,15 +19,23 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+
 
 public class MainActivity4 extends AppCompatActivity {
 
-    TextView tvDificultad, tvTemporizador;
+    private TextView tvDificultad, tvTemporizador;
     private TableroSudoku tableroJuego;
     private ResolverSudoku resolverSudoku;
     private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPista, btnRendirse, btnResolver;
     public static List<Button> botonera = new ArrayList<>();
     String[] datosJugador; // 0 - Nombre, 1 - Dificultad
+    private int casillasObjetivo;
+
+    private int segundosPartida = 0;
+    private boolean ejecutarTemporizadorPartida = true;
+
+    Puntuaciones puntuacion;
 
 
     @Override
@@ -51,6 +61,7 @@ public class MainActivity4 extends AppCompatActivity {
         activarBotoneraNumerica(true);
         configurarBotoneraAcciones();
         System.out.println(resolverSudoku.getNivelDificultad());
+        Sudoku.mostrarSudokuConsola(resolverSudoku.tableroCompleto);
     }
 
     public void activarComponentesActivity() {
@@ -58,12 +69,13 @@ public class MainActivity4 extends AppCompatActivity {
         tvDificultad = findViewById(R.id.tvDificultad);
         tvDificultad.setText("Dificultad " + datosJugador[1]);
         tvTemporizador = findViewById(R.id.tvTemporizador);
+        ejecutarTemporizador();
 
         // Setup tablero
         tableroJuego = findViewById(R.id.tableroSudoku);
         resolverSudoku = tableroJuego.getResolverSudoku();
+        casillasObjetivo = resolverSudoku.getCasillasObjetivo();
         resolverSudoku.setNivelDificultad(datosJugador[1]);
-
 
         // Botón 1
         btn1 = findViewById(R.id.btn1);
@@ -71,9 +83,8 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(1);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -83,9 +94,8 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(2);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -95,9 +105,8 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(3);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -107,9 +116,8 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(4);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -119,9 +127,8 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(5);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -131,9 +138,8 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(6);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -143,9 +149,8 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(7);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -155,9 +160,8 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(8);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
 
@@ -167,20 +171,20 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resolverSudoku.setPosicionNumero(9);
-                configurarBotonResolver(resolverSudoku.estaCompletado());
+                estadoBotonera();
                 tableroJuego.invalidate();
-//                resolverSudoku.mostrarSudokuConsola();
             }
         });
-        // TODO RECOLOCAR BOTÓN PISTA, OCULTAR SI NO SE JUEGA EN FÁCIL
+
         // Botón Pista
         btnPista = findViewById(R.id.btnPista);
         btnPista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("PISTA");
-                resolverSudoku.mostrarSudokuConsola();
-                Sudoku.mostrarSudokuConsola(resolverSudoku.tableroCompleto);
+                resolverSudoku.validarPista();
+                estadoBotonera();
+//                resolverSudoku.mostrarSudokuConsola();
+//                Sudoku.mostrarSudokuConsola(resolverSudoku.tableroCompleto);
             }
         });
 
@@ -188,10 +192,10 @@ public class MainActivity4 extends AppCompatActivity {
         btnRendirse = findViewById(R.id.btnRendirse);
         btnRendirse.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { // TODO POSIBLE REFACTORIZACIÓN
+            public void onClick(View v) {
                 AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
                 alertaSalir.setTitle("Rendición");
-                alertaSalir.setMessage("\n¿Seguro que quieres abandonar?\n");
+                alertaSalir.setMessage("\n¿Seguro que quieres abandonar " + datosJugador[0] + "?\n");
                 alertaSalir.setCancelable(false);
 
                 alertaSalir.setPositiveButton("Abandonar", new DialogInterface.OnClickListener() {
@@ -219,12 +223,7 @@ public class MainActivity4 extends AppCompatActivity {
         btnResolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO HACER BIEN
-                // TODO COMPROBAR SI DIFICULTAD ES DIFICIL $$ SI TABLERO LLENO, SINO...
-//                if (btnResolver.getText().toString().equals("Volver menú principal")) {
-//                    Intent intent = new Intent(MainActivity4.this, MainActivity.class);
-//                    startActivity(intent);
-//                }
+                // Fácil - Normal si se resuelve con trampa
                 if (btnResolver.getText().toString().equals("Volver menú principal")) {
                     Intent intent = new Intent(MainActivity4.this, MainActivity.class);
                     startActivity(intent);
@@ -232,17 +231,19 @@ public class MainActivity4 extends AppCompatActivity {
                 } else {
 
                     if (resolverSudoku.getNivelDificultad().equals("Difícil")) {
-//                    System.out.println("RESUELTO?...");
                         if (Arrays.deepEquals(resolverSudoku.tablero, resolverSudoku.tableroCompleto)) {
-                            System.out.println("COMPLETADO CON EXITO");
-                            // TODO POSIBLE REFACTORIZACIÓN
+                            ejecutarTemporizadorPartida = false;
+                            establecerPuntuacion();
+
                             AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
                             alertaSalir.setTitle("ENHORABUENA");
-                            alertaSalir.setMessage("\nLo lograste, ¡bien hecho!\n");
+                            alertaSalir.setMessage("\nLo lograste " + datosJugador[0] + ".\n\nHas conseguido " + puntuacion.getPuntuacion() + " puntos.\n\n¡Bien hecho!.\n");
                             alertaSalir.setCancelable(false);
 
                             alertaSalir.setPositiveButton("Guardar y Volver", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    PeticionesBD.guardarPuntuacion(getApplicationContext(), puntuacion);
+
                                     Intent intent = new Intent(MainActivity4.this, MainActivity.class);
                                     startActivity(intent);
 
@@ -250,32 +251,13 @@ public class MainActivity4 extends AppCompatActivity {
                                 }
                             });
 
-//                    alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.cancel();
-//                        }
-//                    });
-
                             alertaSalir.show();
 
-
                         } else {
-                            System.out.println("NO COINCIDE :(");
-                            // TODO POSIBLE REFACTORIZACIÓN
                             AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
                             alertaSalir.setTitle("Fallaste");
-                            alertaSalir.setMessage("\nSigue intentádolo, ¡ánimo!\n");
+                            alertaSalir.setMessage("\nSigue intentádolo, ¡ánimo!.\n");
                             alertaSalir.setCancelable(false);
-
-//                    alertaSalir.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            Intent intent = new Intent(MainActivity4.this, MainActivity.class);
-//                            startActivity(intent);
-//
-//                            dialog.dismiss();
-//                        }
-//                    });
 
                             alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
                                 @Override
@@ -286,83 +268,79 @@ public class MainActivity4 extends AppCompatActivity {
 
                             alertaSalir.show();
                         }
-                    } else {
-//                        TODO COMPROBAR SI HAY POSICIONES VACIAS
-                        resolverSudoku.setTablero(resolverSudoku.getTableroCompleto());
-                        tableroJuego.invalidate();
 
-                        btnPista.setVisibility(View.GONE);
-                        btnRendirse.setVisibility(View.GONE);
-                        btnResolver.setText("Volver menú principal");
+                    } else {
+                        // Fácil-Normal si el jugador ha completado el tablero
+                        if (resolverSudoku.estaCompletado()) {
+                            if (Arrays.deepEquals(resolverSudoku.tablero, resolverSudoku.tableroCompleto)) {
+                                ejecutarTemporizadorPartida = false;
+                                establecerPuntuacion();
+
+                                AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                                alertaSalir.setTitle("ENHORABUENA");
+                                alertaSalir.setMessage("\nLo lograste " + datosJugador[0] + ".\n\nHas conseguido " + puntuacion.getPuntuacion() + " puntos.\n\n¡Bien hecho!.\n");
+                                alertaSalir.setCancelable(false);
+
+                                alertaSalir.setPositiveButton("Guardar y Volver", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        PeticionesBD.guardarPuntuacion(getApplicationContext() ,puntuacion);
+
+                                        Intent intent = new Intent(MainActivity4.this, MainActivity.class);
+                                        startActivity(intent);
+
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                alertaSalir.show();
+
+                            } else {
+                                AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                                alertaSalir.setTitle("Fallaste");
+                                alertaSalir.setMessage("\nSigue intentádolo, ¡ánimo!.\n");
+                                alertaSalir.setCancelable(false);
+
+                                alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                alertaSalir.show();
+                            }
+
+                        } else { // Si no está completado dará opción de trampear (no se guardará puntuación)
+                            AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
+                            alertaSalir.setTitle("NO HAS TERMINADO");
+                            alertaSalir.setMessage("\nSi haces trampa resolverás el sudoku pero no se guardará la puntuación.\n");
+                            alertaSalir.setCancelable(false);
+
+                            alertaSalir.setPositiveButton("Hacer Trampa", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    ejecutarTemporizadorPartida = false;
+                                    resolverSudoku.setTablero(resolverSudoku.getTableroCompleto());
+                                    tableroJuego.invalidate();
+
+                                    btnPista.setVisibility(View.GONE);
+                                    btnRendirse.setVisibility(View.GONE);
+                                    btnResolver.setText("Volver menú principal");
+
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            alertaSalir.show();
+                        }
                     }
                 }
-
-
-//                System.out.println("RESUELTO?...");
-//                if (Arrays.deepEquals(resolverSudoku.tablero, resolverSudoku.tableroCompleto)) {
-//                    System.out.println("COMPLETADO CON EXITO");
-//                    // TODO POSIBLE REFACTORIZACIÓN
-//                    AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
-//                    alertaSalir.setTitle("ENHORABUENA");
-//                    alertaSalir.setMessage("\nLo has logrado, bien hecho\n");
-//                    alertaSalir.setCancelable(false);
-//
-//                    alertaSalir.setPositiveButton("Guardar y Volver", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            Intent intent = new Intent(MainActivity4.this, MainActivity.class);
-//                            startActivity(intent);
-//
-//                            dialog.dismiss();
-//                        }
-//                    });
-//
-////                    alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
-////                        @Override
-////                        public void onClick(DialogInterface dialog, int which) {
-////                            dialog.cancel();
-////                        }
-////                    });
-//
-//                    alertaSalir.show();
-//
-//
-//                } else {
-//                    System.out.println("NO COINCIDE :(");
-//                    // TODO POSIBLE REFACTORIZACIÓN
-//                    AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
-//                    alertaSalir.setTitle("Fallaste");
-//                    alertaSalir.setMessage("\nSigue intentádolo, ¡ánimo!\n");
-//                    alertaSalir.setCancelable(false);
-//
-////                    alertaSalir.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-////                        public void onClick(DialogInterface dialog, int id) {
-////                            Intent intent = new Intent(MainActivity4.this, MainActivity.class);
-////                            startActivity(intent);
-////
-////                            dialog.dismiss();
-////                        }
-////                    });
-//
-//                    alertaSalir.setNegativeButton("Continuar", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.cancel();
-//                        }
-//                    });
-//
-//                    alertaSalir.show();
-//                }
-
-                // TODO ADAPTAR PARA MOSTRAR SOLUCIÓN Y SALIR
-                // TODO METER DENTRO DE ALERTS - OJO CON NIVEL DIFÍCIL
-                // TODO LO SIGUIENTE FUNCIONA EN FACIL - NORMAL
-//                if (btnResolver.getText().toString().equals("Resolver")) {
-//                    btnPista.setVisibility(View.GONE);
-//                    btnRendirse.setVisibility(View.GONE);
-//                    btnResolver.setText("Volver menú principal");
-//                } else {
-//                    btnResolver.setText("Resolver");
-//                }
             }
         });
 
@@ -376,7 +354,32 @@ public class MainActivity4 extends AppCompatActivity {
         botonera.add(btn7);
         botonera.add(btn8);
         botonera.add(btn9);
+    }
 
+    private void ejecutarTemporizador() {
+        final Handler manejador = new Handler(Looper.getMainLooper());
+
+        manejador.post(new Runnable() {
+            @Override
+            public void run() {
+                int minutos = (segundosPartida % 3600) / 60;
+                int segundos = segundosPartida % 60;
+
+                String tiempoFormateado = String.format(Locale.getDefault(),
+                        "%02d:%02d", minutos, segundos);
+
+                // Mostrará el tiempo de partida
+                tvTemporizador.setText(tiempoFormateado);
+
+                if (ejecutarTemporizadorPartida) {
+                    // necesitaremos los segundos para calibrar la puntuación final
+                    segundosPartida++;
+                }
+
+                // Se actualiza cada segundo
+                manejador.postDelayed(this, 1000);
+            }
+        });
     }
 
     public static void activarBotoneraNumerica(boolean activar) {
@@ -385,8 +388,15 @@ public class MainActivity4 extends AppCompatActivity {
         }
     }
 
-    public void configurarBotonResolver(boolean seActiva) {
-        btnResolver.setEnabled(seActiva);
+    public void estadoBotonera() {
+        // Muestra el botón Resolver si se ha cubierto al completo en Difícil
+        if (datosJugador[1].equals("Difícil")) {
+            btnResolver.setEnabled(resolverSudoku.estaCompletado());
+        }
+        // Deshabilita el botón Pista si se ha cubierto al completo en Fácil
+        if (datosJugador[1].equals("Fácil")) {
+            btnPista.setEnabled(!resolverSudoku.estaCompletado());
+        }
     }
 
     public void configurarBotoneraAcciones() {
@@ -397,6 +407,39 @@ public class MainActivity4 extends AppCompatActivity {
         if (resolverSudoku.getNivelDificultad().equals("Difícil")) {
             btnResolver.setEnabled(false);
         }
+    }
+
+    /*
+    * El sistema de puntuación tiene en cuenta las casillas resueltas, la cantidad
+    * de pistas utilizadas, la dificultad y el tiempo empleado en resolver el tablero.
+    *
+    * La puntuación nunca podrá ser menor o igual a 0, en esos supuestos la puntuación final
+    * equivaldrá al multiplicador/100 según dificultad (Fácil 100, Normal 400, Difícil 2000)
+     */
+    public void establecerPuntuacion() {
+        int puntuacionFinal;
+        int multiplicador = 0;
+
+        switch(datosJugador[1]) {
+            case "Fácil":
+                multiplicador = 100;
+                break;
+            case "Normal":
+                multiplicador = 400;
+                break;
+            case "Difícil":
+                multiplicador = 2000;
+                break;
+        }
+
+        puntuacionFinal = (casillasObjetivo - resolverSudoku.getPistasUsadas()) * multiplicador - segundosPartida;
+
+        if (puntuacionFinal <= 0) {
+            puntuacionFinal = multiplicador / 100;
+        }
+
+        puntuacion = new Puntuaciones(datosJugador[0], datosJugador[1], Integer.toString(puntuacionFinal));
+        System.out.println(puntuacion);
     }
 
 }

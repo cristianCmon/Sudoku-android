@@ -30,7 +30,22 @@ public class PuntuacionesAdapter extends RecyclerView.Adapter<PuntuacionesViewHo
     @Override
     public void onBindViewHolder(@NonNull PuntuacionesViewHolder holder, int position) {
         Puntuaciones puntuacion = puntuaciones.get(position);
-        holder.nombre.setText(puntuacion.getNombre());
+
+        switch(position) {
+            case 0:
+                holder.nombre.setText(puntuacion.getNombre() + " \uD83E\uDD47");
+                break;
+            case 1:
+                holder.nombre.setText(puntuacion.getNombre() + " \uD83E\uDD48");
+                break;
+            case 2:
+                holder.nombre.setText(puntuacion.getNombre() + " \uD83E\uDD49");
+                break;
+            default:
+                holder.nombre.setText(puntuacion.getNombre());
+                break;
+        }
+
         holder.dificultad.setText(puntuacion.getDificultad());
         holder.puntuacion.setText(puntuacion.getPuntuacion());
     }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ResolverSudoku {
 
     int[][] tablero, tableroCompleto;
+    boolean[][] tableroPistasUsadas = new boolean[9][9];
     boolean[][] esClicable;
 
     String nivelDificultad = "";
@@ -19,29 +20,8 @@ public class ResolverSudoku {
         columnaSeleccionada = -1;
 
         generarNuevo();
-//        prueba();
-//        tablero = new int[9][9];
-
-        // Crea tablero vacío (lleno de 0s)
-//        for (int f = 0; f < 9; f++) {
-//            for (int c = 0; c < 9; c++) {
-//                tablero[f][c] = 0;
-//            }
-//        }
-
-        // Almacenará celdas vacías
         indiceCajaVacia = new ArrayList<>();
     }
-
-//    public ResolverSudoku(int[][] tableroPropuesto) {
-//        filaSeleccionada = -1;
-//        columnaSeleccionada = -1;
-//
-//        tablero = tableroPropuesto;
-//
-//        // Almacenará celdas vacías
-//        indiceCajaVacia = new ArrayList<>();
-//    }
 
     private void prueba() {
         tablero[0][0] = 0;
@@ -74,13 +54,13 @@ public class ResolverSudoku {
                 this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] = 0;
             } else {
                 this.tablero[this.filaSeleccionada - 1][this.columnaSeleccionada - 1] = numero;
-                System.out.println(comprobarNumeroTablero(this.filaSeleccionada - 1, this.columnaSeleccionada - 1));
-//                comprobarNumeroTablero(numero);
+                comprobarNumeroTablero(this.filaSeleccionada - 1, this.columnaSeleccionada - 1);
+//                System.out.println(comprobarNumeroTablero(this.filaSeleccionada - 1, this.columnaSeleccionada - 1));
             }
         }
     }
-    // TODO RESOLVER PINTAR ROJO
-    private boolean comprobarNumeroTablero(int fila, int columna) {
+
+    public boolean comprobarNumeroTablero(int fila, int columna) {
         if (this.tablero[fila][columna] > 0) { // Si no está vacío...
             for (int i = 0; i < 9; i++) {
                 // Comprobador Horizontal
@@ -194,6 +174,48 @@ public class ResolverSudoku {
         }
 
         return true;
+    }
+
+    public void validarPista() {
+        System.out.println(getNivelDificultad());
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
+                if (tablero[i][j] == 0) {
+                    tablero[i][j] = tableroCompleto[i][j];
+                    tableroPistasUsadas[i][j] = true;
+                    esClicable[i][j] = false;
+                    return;
+                }
+            }
+        }
+    }
+
+    public int getPistasUsadas() {
+        int contadorPistasUsadas = 0;
+
+        for (int i = 0; i < tableroPistasUsadas.length; i++) {
+            for (int j = 0; j < tableroPistasUsadas[i].length; j++) {
+                if (tableroPistasUsadas[i][j]) {
+                    contadorPistasUsadas++;
+                }
+            }
+        }
+
+        return contadorPistasUsadas;
+    }
+
+    public int getCasillasObjetivo() {
+        int contadorCasillasObjetivo = 0;
+
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
+                if (tablero[i][j] == 0) {
+                    contadorCasillasObjetivo++;
+                }
+            }
+        }
+
+        return contadorCasillasObjetivo;
     }
 
 }

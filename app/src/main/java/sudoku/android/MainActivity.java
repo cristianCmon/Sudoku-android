@@ -15,21 +15,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnNuevaPartida, btnPuntuaciones, btnSalir;
-    private int[][] rejilla;
 
 
     @Override
@@ -54,9 +43,6 @@ public class MainActivity extends AppCompatActivity {
         btnNuevaPartida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                rejilla = Sudoku.generar();
-//                Sudoku.mostrarSudokuConsola(rejilla);
-//                TODO OJEAR ESTE ENLACE https://www.youtube.com/watch?v=lYjSl_ou05Q
                 Intent intent = new Intent(MainActivity.this, MainActivity3.class);
                 startActivity(intent);
             }
@@ -76,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         btnSalir = findViewById(R.id.clicSalir);
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { // TODO POSIBLE REFACTORIZACIÓN
+            public void onClick(View v) {
                 AlertDialog.Builder alertaSalir = new AlertDialog.Builder(v.getContext());
                 alertaSalir.setTitle("¡Detente!");
                 alertaSalir.setMessage("\n¿Estás seguro de que quieres salir?\n");
